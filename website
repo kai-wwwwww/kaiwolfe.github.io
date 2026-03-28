@@ -1,0 +1,592 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jack Dish Plumbing | Professional Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Refined Glass Effects */
+        .glass { 
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(12px); 
+            -webkit-backdrop-filter: blur(12px); 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+        }
+        .glass-dark {
+            background: rgba(9, 9, 11, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-left: 3px solid #2563EB;
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.4);
+        }
+        
+        /* Connection Line Animation */
+        @keyframes dash-flow {
+            from { stroke-dashoffset: 24; }
+            to { stroke-dashoffset: 0; }
+        }
+        .animate-dash {
+            stroke-dasharray: 6 6;
+            animation: dash-flow 1.5s linear infinite;
+        }
+        
+        /* Progressive Blur Top Styles */
+        .gradient-blur {
+            position: fixed;
+            z-index: 50;
+            inset: 0 0 auto 0;
+            height: 12%;
+            pointer-events: none;
+        }
+        .gradient-blur>div, .gradient-blur::before, .gradient-blur::after { position: absolute; inset: 0; }
+        .gradient-blur::before { content: ""; z-index: 1; backdrop-filter: blur(0.5px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 0) 37.5%); }
+        .gradient-blur>div:nth-of-type(1) { z-index: 2; backdrop-filter: blur(1px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 12.5%, rgba(0, 0, 0, 1) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 0) 50%); }
+        .gradient-blur>div:nth-of-type(2) { z-index: 3; backdrop-filter: blur(2px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 25%, rgba(0, 0, 0, 1) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 62.5%); }
+        .gradient-blur>div:nth-of-type(3) { z-index: 4; backdrop-filter: blur(4px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 37.5%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 0) 75%); }
+        .gradient-blur>div:nth-of-type(4) { z-index: 5; backdrop-filter: blur(8px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 1) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 0) 87.5%); }
+        .gradient-blur>div:nth-of-type(5) { z-index: 6; backdrop-filter: blur(16px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 62.5%, rgba(0, 0, 0, 1) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 0) 100%); }
+        .gradient-blur>div:nth-of-type(6) { z-index: 7; backdrop-filter: blur(32px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 75%, rgba(0, 0, 0, 1) 87.5%, rgba(0, 0, 0, 1) 100%); }
+        .gradient-blur::after { content: ""; z-index: 8; backdrop-filter: blur(64px); mask: linear-gradient(to top, rgba(0, 0, 0, 0) 87.5%, rgba(0, 0, 0, 1) 100%); }
+        
+        /* Animation Keyframe */
+        @keyframes animationIn {
+            0% { opacity: 0; transform: translateY(16px); filter: blur(4px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0px); }
+        }
+        
+        /* Hide scrollbar */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+    
+    <script>
+        (function () {
+            const style = document.createElement("style");
+            style.textContent = `
+                .animate-on-scroll { animation-play-state: paused !important; opacity: 0; }
+                .animate-on-scroll.animate { animation-play-state: running !important; opacity: 1; }
+            `;
+            document.head.appendChild(style);
+            
+            if (!window.__inViewIO) {
+                window.__inViewIO = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("animate");
+                            window.__inViewIO.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: "0px 0px -5% 0px" });
+            }
+            
+            window.initInViewAnimations = function (selector = ".animate-on-scroll") {
+                document.querySelectorAll(selector).forEach((el) => {
+                    window.__inViewIO.observe(el);
+                });
+            };
+            
+            window.openProjectModal = function(element) {
+                const imgSrc = element.getAttribute('data-img');
+                const title = element.getAttribute('data-title');
+                const desc = element.getAttribute('data-desc');
+                document.getElementById('modal-img').src = imgSrc;
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-desc').textContent = desc;
+                
+                const modal = document.getElementById('project-modal');
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0', 'scale-95');
+                    modal.classList.add('opacity-100', 'scale-100');
+                }, 10);
+            };
+            
+            window.closeProjectModal = function() {
+                const modal = document.getElementById('project-modal');
+                modal.classList.remove('opacity-100', 'scale-100');
+                modal.classList.add('opacity-0', 'scale-95');
+                document.body.style.overflow = 'auto';
+                
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                    document.getElementById('modal-img').src = '';
+                }, 300);
+            };
+            
+            document.addEventListener("DOMContentLoaded", () => {
+                initInViewAnimations();
+                document.getElementById('project-modal').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        closeProjectModal();
+                    }
+                });
+            });
+        })();
+    </script>
+</head>
+<body class="bg-zinc-50 text-zinc-900 antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Progressive Blur -->
+    <div class="gradient-blur">
+        <div></div><div></div><div></div><div></div><div></div><div></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-[60] transition-all duration-300">
+        <div class="max-w-[1400px] mx-auto px-6 py-6 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-2 group cursor-pointer">
+                <div class="text-blue-500 transition-colors">
+                    <iconify-icon icon="solar:waterdrop-linear" width="28" style="stroke-width: 1.5;"></iconify-icon>
+                </div>
+                <span class="text-white tracking-tight text-xl font-medium">Jack Dish Plumbing</span>
+            </div>
+
+            <!-- Menu -->
+            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-white/80">
+                <a href="#" class="hover:text-blue-400 transition-colors">Services</a>
+                <a href="#" class="hover:text-blue-400 transition-colors">Residential</a>
+                <a href="#" class="hover:text-blue-400 transition-colors">Commercial</a>
+                <a href="#projects" class="hover:text-blue-400 transition-colors">Gallery</a>
+            </div>
+
+            <!-- CTA -->
+            <button class="bg-blue-600 px-5 py-2.5 rounded-full text-white text-sm font-medium hover:bg-blue-700 shadow-sm transition-all flex items-center gap-2">
+                Book Service
+                <iconify-icon icon="solar:arrow-right-linear" width="16" style="stroke-width: 1.5;"></iconify-icon>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative w-full h-[100vh] overflow-hidden bg-zinc-950">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Plumbing Installation" class="w-full h-full object-cover opacity-40 scale-105 mix-blend-overlay">
+            <div class="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-900/60 to-zinc-950"></div>
+        </div>
+
+        <!-- Connected Floating Content Cards (Right) -->
+        <div class="absolute top-[25%] right-[5%] xl:right-[10%] hidden lg:block z-10 w-[500px] h-[400px] [animation:animationIn_0.8s_ease-out_0.5s_both] animate-on-scroll">
+            
+            <!-- SVG Connection Line -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" style="z-index: -1;">
+                <path d="M 128 80 C 128 200, 320 150, 320 270" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"></path>
+                <path d="M 128 80 C 128 200, 320 150, 320 270" fill="none" stroke="#2563EB" stroke-width="2" class="animate-dash"></path>
+                <circle cx="128" cy="80" r="4" fill="#2563EB" class="animate-pulse"></circle>
+                <circle cx="320" cy="270" r="4" fill="#2563EB" class="animate-pulse"></circle>
+            </svg>
+
+            <!-- Card 1 -->
+            <div class="absolute top-0 left-0 glass-dark p-5 rounded-xl w-64 transform hover:-translate-y-1 transition-transform duration-500">
+                <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+                    <div class="flex items-center gap-3">
+                        <iconify-icon icon="solar:clock-circle-linear" class="text-blue-500" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                        <p class="text-xs text-white uppercase tracking-wider font-medium">Emergency Response</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center text-sm text-white">
+                        <span class="text-white/60">Availability</span>
+                        <span class="text-blue-400 font-medium">24/7/365</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm text-white">
+                        <span class="text-white/60">Dispatch Time</span>
+                        <span>Under 45 mins</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="absolute top-[190px] left-[192px] glass-dark p-5 rounded-xl w-64 transform hover:-translate-y-1 transition-transform duration-500 delay-100">
+                <div class="flex items-center justify-between mb-4 border-b border-white/5 pb-3">
+                    <div class="flex items-center gap-3">
+                        <iconify-icon icon="solar:shield-check-linear" class="text-blue-500" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                        <p class="text-xs text-white uppercase tracking-wider font-medium">Quality Guarantee</p>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center text-sm text-white">
+                        <span class="text-white/60">Workmanship</span>
+                        <span>Lifetime</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm text-white">
+                        <span class="text-white/60">Status</span>
+                        <span class="flex items-center gap-1.5 text-emerald-400 font-medium">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            Licensed
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Main Hero Text -->
+        <div class="absolute bottom-32 left-0 w-full px-6 z-20">
+            <div class="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+                <div class="lg:col-span-8">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl text-white leading-[1.05] tracking-tight mb-6 font-medium [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                        Expert Plumbing. <br>
+                        <span class="text-blue-500 pr-4">Zero</span> Hassle.
+                    </h1>
+                </div>
+                <div class="lg:col-span-4 lg:mb-4 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll border-l border-white/10 pl-6">
+                    <p class="text-zinc-400 text-lg leading-relaxed mb-8 max-w-md">
+                        Calgary's trusted residential and commercial plumbing experts delivering reliable, code-compliant solutions when you need them most.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-blue-600 text-white px-6 py-3 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
+                            Request an Estimate
+                            <iconify-icon icon="solar:document-text-linear" width="18" style="stroke-width: 1.5;"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Trust Indicators -->
+    <section class="py-12 border-b border-zinc-200 bg-white">
+        <div class="max-w-[1400px] mx-auto px-6 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+            <p class="text-center text-xs font-medium uppercase tracking-widest text-zinc-400 mb-8">Certified &amp; Trusted by Calgarians</p>
+            <div class="flex flex-wrap justify-center items-center gap-8 md:gap-20 text-sm font-medium text-zinc-600">
+                <div class="flex items-center gap-2"><iconify-icon icon="solar:medal-star-linear" width="24" class="text-blue-500"></iconify-icon> Red Seal Certified</div>
+                <div class="flex items-center gap-2"><iconify-icon icon="solar:shield-check-linear" width="24" class="text-blue-500"></iconify-icon> Fully Insured &amp; Bonded</div>
+                <div class="flex items-center gap-2"><iconify-icon icon="solar:home-smile-linear" width="24" class="text-blue-500"></iconify-icon> A+ BBB Rating</div>
+                <div class="flex items-center gap-2"><iconify-icon icon="solar:clipboard-check-linear" width="24" class="text-blue-500"></iconify-icon> WCB Compliant</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="py-32 bg-zinc-50 overflow-hidden border-b border-zinc-200">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                
+                <!-- Text Content -->
+                <div class="order-2 lg:order-1 relative [animation:animationIn_0.8s_ease-out_0.2s_both] animate-on-scroll">
+                    <div class="flex items-center gap-2 mb-6">
+                        <iconify-icon icon="solar:wrench-linear" width="24" class="text-blue-600" style="stroke-width: 1.5;"></iconify-icon>
+                        <span class="text-xs font-medium uppercase tracking-wider text-zinc-500">Comprehensive Solutions</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl text-zinc-900 mb-8 leading-[1.1] tracking-tight font-medium">
+                        Every leak stopped. <br>
+                        <span class="text-zinc-400">Every pipe secured.</span>
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4 mb-10">
+                        <!-- Service Item -->
+                        <div class="flex items-start gap-3 p-4 bg-white border border-zinc-200 rounded-xl hover:border-blue-500/30 hover:shadow-sm transition-all">
+                            <iconify-icon icon="solar:waterdrop-linear" class="text-blue-600 mt-0.5" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                            <div>
+                                <h3 class="text-sm font-medium text-zinc-900 mb-1">Drain Cleaning</h3>
+                                <p class="text-xs text-zinc-500 leading-relaxed">Advanced hydro-jetting and rooter services for clear lines.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-white border border-zinc-200 rounded-xl hover:border-blue-500/30 hover:shadow-sm transition-all">
+                            <iconify-icon icon="solar:flame-linear" class="text-blue-600 mt-0.5" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                            <div>
+                                <h3 class="text-sm font-medium text-zinc-900 mb-1">Water Heaters</h3>
+                                <p class="text-xs text-zinc-500 leading-relaxed">Installation and repair of tankless and conventional units.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-white border border-zinc-200 rounded-xl hover:border-blue-500/30 hover:shadow-sm transition-all">
+                            <iconify-icon icon="solar:ruler-cross-pen-linear" class="text-blue-600 mt-0.5" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                            <div>
+                                <h3 class="text-sm font-medium text-zinc-900 mb-1">Pipe Repair &amp; Install</h3>
+                                <p class="text-xs text-zinc-500 leading-relaxed">Whole-home repiping and localized leak resolution.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-3 p-4 bg-white border border-zinc-200 rounded-xl hover:border-blue-500/30 hover:shadow-sm transition-all">
+                            <iconify-icon icon="solar:buildings-linear" class="text-blue-600 mt-0.5" width="20" style="stroke-width: 1.5;"></iconify-icon>
+                            <div>
+                                <h3 class="text-sm font-medium text-zinc-900 mb-1">Commercial Services</h3>
+                                <p class="text-xs text-zinc-500 leading-relaxed">High-capacity plumbing systems for businesses.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Highlight -->
+                    <div class="bg-blue-50/50 rounded-xl p-5 border border-blue-100">
+                        <div class="flex items-center gap-3 mb-2">
+                            <div class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></div>
+                            <h4 class="font-medium text-sm text-blue-900 tracking-tight">24/7 Emergency Dispatch</h4>
+                        </div>
+                        <p class="text-sm text-blue-700/80">Our fully stocked service vehicles are ready to deploy at a moment's notice to mitigate water damage and restore functionality.</p>
+                    </div>
+                </div>
+
+                <!-- Image Composition -->
+                <div class="order-1 lg:order-2 relative h-[600px] w-full [animation:animationIn_0.8s_ease-out_0.4s_both] animate-on-scroll">
+                    <!-- Main Image -->
+                    <div class="absolute top-0 right-0 w-[85%] h-[90%] rounded-2xl overflow-hidden border border-zinc-200 shadow-xl">
+                        <img src="https://images.unsplash.com/photo-1585704032915-c3400ca199e7?auto=format&amp;fit=crop&amp;q=80" alt="Plumber working" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <!-- Floating Overlap Image -->
+                    <div class="absolute bottom-4 left-0 w-[45%] h-[40%] rounded-2xl overflow-hidden shadow-2xl border-[6px] border-zinc-50">
+                        <img src="https://images.unsplash.com/photo-1550581190-9c1c48d21d6c?auto=format&amp;fit=crop&amp;q=80" alt="Modern Sink" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Timeline -->
+    <section class="py-24 bg-white border-b border-zinc-200">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="text-center mb-16 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                <span class="text-xs font-medium tracking-wider text-blue-600 uppercase mb-2 block">Our Approach</span>
+                <h2 class="text-3xl text-zinc-900 tracking-tight font-medium">Simple, Transparent Process</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 relative [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll">
+                <!-- Connecting Line (Desktop) -->
+                <div class="hidden md:block absolute top-[40px] left-[10%] w-[80%] h-[1px] bg-zinc-200 z-0"></div>
+                
+                <!-- Step 1 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-white border border-zinc-200 rounded-2xl flex items-center justify-center mb-5 shadow-sm group hover:border-blue-500 transition-colors">
+                        <iconify-icon icon="solar:phone-calling-linear" width="28" class="text-zinc-400 group-hover:text-blue-600 transition-colors" style="stroke-width: 1.5;"></iconify-icon>
+                    </div>
+                    <span class="text-xs font-medium text-zinc-400 mb-1 block uppercase tracking-wider">Step 1</span>
+                    <h4 class="text-base font-medium text-zinc-900 mb-1">Contact &amp; Schedule</h4>
+                    <p class="text-sm text-zinc-500 max-w-[200px]">Reach out via phone or online to book a convenient time.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-white border border-zinc-200 rounded-2xl flex items-center justify-center mb-5 shadow-sm group hover:border-blue-500 transition-colors">
+                        <iconify-icon icon="solar:clipboard-list-linear" width="28" class="text-zinc-400 group-hover:text-blue-600 transition-colors" style="stroke-width: 1.5;"></iconify-icon>
+                    </div>
+                    <span class="text-xs font-medium text-zinc-400 mb-1 block uppercase tracking-wider">Step 2</span>
+                    <h4 class="text-base font-medium text-zinc-900 mb-1">On-Site Diagnosis</h4>
+                    <p class="text-sm text-zinc-500 max-w-[200px]">Comprehensive inspection and upfront, transparent pricing.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-blue-600 border border-blue-600 rounded-2xl flex items-center justify-center mb-5 shadow-md group">
+                        <iconify-icon icon="solar:tools-linear" width="28" class="text-white" style="stroke-width: 1.5;"></iconify-icon>
+                    </div>
+                    <span class="text-xs font-medium text-blue-600 mb-1 block uppercase tracking-wider">Step 3</span>
+                    <h4 class="text-base font-medium text-zinc-900 mb-1">Professional Repair</h4>
+                    <p class="text-sm text-zinc-500 max-w-[200px]">Expert execution using high-quality parts and techniques.</p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative z-10 flex flex-col items-center text-center">
+                    <div class="w-20 h-20 bg-white border border-zinc-200 rounded-2xl flex items-center justify-center mb-5 shadow-sm group hover:border-blue-500 transition-colors">
+                        <iconify-icon icon="solar:check-circle-linear" width="28" class="text-zinc-400 group-hover:text-blue-600 transition-colors" style="stroke-width: 1.5;"></iconify-icon>
+                    </div>
+                    <span class="text-xs font-medium text-zinc-400 mb-1 block uppercase tracking-wider">Step 4</span>
+                    <h4 class="text-base font-medium text-zinc-900 mb-1">Final Review</h4>
+                    <p class="text-sm text-zinc-500 max-w-[200px]">Testing the system and ensuring a clean workspace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facility Overview & CTA -->
+    <section class="pt-24 pb-16 bg-zinc-950 text-zinc-200">
+        <div class="max-w-[1400px] mx-auto px-6">
+            
+            <div class="flex flex-col items-center text-center mb-16 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                <span class="text-xs font-medium tracking-wider text-blue-500 uppercase mb-3 block">Why Choose Us</span>
+                <h2 class="text-4xl md:text-5xl text-white tracking-tight mb-4 font-medium">Partner With True Professionals</h2>
+                <p class="text-zinc-400 max-w-2xl text-base">We combine years of hands-on experience with modern diagnostic equipment to provide efficient, long-lasting plumbing solutions for every property type.</p>
+            </div>
+
+            <div class="relative w-full h-[50vh] md:h-[60vh] rounded-2xl overflow-hidden group [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll shadow-2xl border border-white/10">
+                <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&amp;fit=crop&amp;q=80" class="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105 opacity-50 mix-blend-luminosity">
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-900/40 to-transparent"></div>
+
+                <div class="absolute bottom-0 left-0 w-full p-8 md:p-12 flex flex-col md:flex-row items-end justify-between gap-8">
+                    <div>
+                        <div class="flex items-center gap-3 mb-4">
+                             <span class="bg-zinc-900/80 backdrop-blur border border-white/10 px-3 py-1.5 rounded-full text-xs font-medium text-white tracking-wide">
+                                Licensed &amp; Insured
+                            </span>
+                             <span class="bg-blue-600/90 backdrop-blur border border-blue-500 px-3 py-1.5 rounded-full text-xs font-medium text-white tracking-wide">
+                                Top Rated in Calgary
+                            </span>
+                        </div>
+                        <h3 class="text-2xl md:text-4xl text-white tracking-tight font-medium">Need immediate assistance?</h3>
+                    </div>
+
+                    <div class="flex-shrink-0">
+                        <button class="bg-blue-600 text-white px-6 py-4 rounded-full text-sm font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 shadow-lg">
+                            Call (403) 555-0199
+                            <iconify-icon icon="solar:phone-bold" width="18"></iconify-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Recent Projects (Gallery) -->
+    <section id="projects" class="pb-32 pt-16 bg-zinc-950">
+        <div class="max-w-[1400px] mx-auto px-6">
+            <div class="mb-10 border-b border-white/10 pb-4 flex justify-between items-end [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+                <div>
+                    <span class="text-xs font-medium tracking-wider text-blue-500 uppercase mb-2 block">Gallery</span>
+                    <h2 class="text-3xl text-white tracking-tight font-medium">Recent Work</h2>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 [animation:animationIn_0.8s_ease-out_0.3s_both] animate-on-scroll">
+                
+                <!-- Item 1 -->
+                <div class="flex flex-col relative group cursor-pointer rounded-xl overflow-hidden bg-zinc-900 border border-white/5 hover:border-white/20 transition-colors" onclick="openProjectModal(this)" data-img="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&amp;fit=crop&amp;q=80" data-title="Tankless Water Heater Install" data-desc="Complete conversion from a traditional 50-gallon tank to a high-efficiency tankless water heater system, including upgraded gas lines and custom venting for optimal performance.">
+                    <div class="relative w-full h-64 overflow-hidden bg-zinc-800">
+                        <img src="https://images.unsplash.com/photo-1620626011761-996317b8d101?auto=format&amp;fit=crop&amp;q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-medium tracking-wider mb-2 block uppercase">Installation</span>
+                        <h4 class="text-white text-lg tracking-tight font-medium mb-2">High-Efficiency Water Heater</h4>
+                        <p class="text-zinc-400 text-sm line-clamp-2">Complete conversion from a traditional tank to a high-efficiency tankless system.</p>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="flex flex-col relative group cursor-pointer rounded-xl overflow-hidden bg-zinc-900 border border-white/5 hover:border-white/20 transition-colors" onclick="openProjectModal(this)" data-img="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&amp;fit=crop&amp;q=80" data-title="Custom Master Bath Rough-In" data-desc="Precision rough-in plumbing for a luxury master bathroom renovation, featuring dual vanity supplies, custom walk-in shower body sprays, and a freestanding tub filler loop.">
+                    <div class="relative w-full h-64 overflow-hidden bg-zinc-800">
+                        <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&amp;fit=crop&amp;q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-medium tracking-wider mb-2 block uppercase">Renovation</span>
+                        <h4 class="text-white text-lg tracking-tight font-medium mb-2">Master Bath Rough-In</h4>
+                        <p class="text-zinc-400 text-sm line-clamp-2">Precision plumbing for a luxury bathroom, featuring dual vanities and custom shower sprays.</p>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="flex flex-col relative group cursor-pointer rounded-xl overflow-hidden bg-zinc-900 border border-white/5 hover:border-white/20 transition-colors" onclick="openProjectModal(this)" data-img="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&amp;fit=crop&amp;q=80" data-title="Commercial Pipe Retrofit" data-desc="Extensive copper and PEX repiping for a multi-story commercial building. Replaced aging galvanized lines to improve water pressure and eliminate recurring leaks while minimizing business downtime.">
+                    <div class="relative w-full h-64 overflow-hidden bg-zinc-800">
+                        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&amp;fit=crop&amp;q=80" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-medium tracking-wider mb-2 block uppercase">Commercial</span>
+                        <h4 class="text-white text-lg tracking-tight font-medium mb-2">Multi-Story Repiping</h4>
+                        <p class="text-zinc-400 text-sm line-clamp-2">Extensive copper and PEX retrofitting for a commercial facility to improve pressure.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Modal -->
+    <div id="project-modal" class="fixed inset-0 z-[100] hidden bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 opacity-0 scale-95 transition-all duration-300">
+        <div class="bg-zinc-900 border border-white/10 rounded-2xl w-full max-w-4xl max-h-[90vh] overflow-hidden relative shadow-2xl flex flex-col md:flex-row">
+            
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 z-10 bg-black/40 hover:bg-zinc-800 text-white p-2 rounded-full transition-colors backdrop-blur-md border border-white/10">
+                <iconify-icon icon="solar:close-circle-linear" width="24" style="stroke-width: 1.5;"></iconify-icon>
+            </button>
+
+            <!-- Image -->
+            <div class="w-full md:w-1/2 h-64 md:h-auto bg-black relative">
+                <img id="modal-img" src="" class="absolute inset-0 w-full h-full object-cover">
+            </div>
+            
+            <!-- Content -->
+            <div class="w-full md:w-1/2 p-8 md:p-10 flex flex-col justify-center overflow-y-auto no-scrollbar">
+                <div class="flex items-center gap-2 mb-4">
+                    <iconify-icon icon="solar:folder-with-files-linear" width="20" class="text-blue-500" style="stroke-width: 1.5;"></iconify-icon>
+                    <span class="text-xs font-medium tracking-wider text-zinc-400 uppercase">Project Details</span>
+                </div>
+                
+                <h3 id="modal-title" class="text-2xl md:text-3xl text-white tracking-tight mb-4 font-medium">Title</h3>
+                
+                <p id="modal-desc" class="text-zinc-400 text-sm leading-relaxed mb-8">
+                    Description loads here.
+                </p>
+
+                <div class="flex flex-col gap-3 mb-8">
+                    <div class="flex justify-between items-center text-sm border-b border-white/10 pb-2">
+                        <span class="text-zinc-500">Inspection Status</span>
+                        <span class="text-emerald-400 font-medium">Passed</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm border-b border-white/10 pb-2">
+                        <span class="text-zinc-500">Permit Code</span>
+                        <span class="text-zinc-300 font-mono text-xs">CAL-8892</span>
+                    </div>
+                </div>
+                
+                <button class="w-full bg-transparent border border-white/20 text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-white hover:text-black transition-colors flex items-center justify-center gap-2 mt-auto">
+                    Inquire About Similar Work
+                    <iconify-icon icon="solar:arrow-right-linear" width="16" style="stroke-width: 1.5;"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 text-white pt-20 pb-10 border-t border-white/5">
+        <div class="max-w-[1400px] mx-auto px-6 [animation:animationIn_0.8s_ease-out_0.1s_both] animate-on-scroll">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-12 mb-16">
+                <!-- Brand -->
+                <div class="md:col-span-4 flex flex-col items-start">
+                    <div class="flex items-center gap-2 mb-6 text-blue-500">
+                         <iconify-icon icon="solar:waterdrop-linear" width="28" style="stroke-width: 1.5;"></iconify-icon>
+                         <span class="text-lg font-medium tracking-tight text-white">Jack Dish Plumbing</span>
+                    </div>
+                    <p class="text-zinc-400 text-sm leading-relaxed max-w-sm mb-6">
+                        Providing premier residential and commercial plumbing services across Calgary. Committed to quality workmanship and lasting solutions.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-colors">
+                            <iconify-icon icon="solar:map-point-linear" width="18"></iconify-icon>
+                        </a>
+                         <a href="#" class="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-colors">
+                            <iconify-icon icon="solar:phone-linear" width="18"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Links -->
+                <div class="md:col-span-2 md:col-start-7">
+                    <h4 class="font-medium text-sm text-white mb-5 tracking-wide">Services</h4>
+                    <ul class="space-y-3 text-sm text-zinc-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Emergency Repair</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Drain Cleaning</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Water Heaters</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Repiping</a></li>
+                    </ul>
+                </div>
+                 <div class="md:col-span-2">
+                    <h4 class="font-medium text-sm text-white mb-5 tracking-wide">Company</h4>
+                    <ul class="space-y-3 text-sm text-zinc-400">
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Testimonials</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-blue-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Bottom -->
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-zinc-500 font-medium">
+                <p>© 2024 Jack Dish Plumbing. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="hover:text-zinc-300 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-zinc-300 transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+</body></html>
